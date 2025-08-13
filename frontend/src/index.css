@@ -1,0 +1,7 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+@import "daisyui/base.css";
+@import "daisyui/components/button.css";
+@import "daisyui/components/card.css";
+@import "daisyui/components/input.css";
+@import "daisyui/components/alert.css";
