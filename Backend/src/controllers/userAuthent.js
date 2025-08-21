@@ -31,13 +31,16 @@ const register = async (req,res)=>{
     //
     
      const user =  await User.create(bodyData);
-     const token =  jwt.sign({_id:user._id , email:email},process.env.JWT_KEY,{expiresIn: 60*60});
+     const token =  jwt.sign({_id:user._id , email:email,name:name},process.env.JWT_KEY,{expiresIn: 60*60});
      res.cookie('token',token,{maxAge: 60*60*1000});
      res.status(201).send("User Registered Successfully");
     }
     catch(err){
-        res.status(400).send("Error: "+err);
-    }
+      console.error("❌ Registration Error:", err.message);
+  console.error("🔍 Full Error Object:", err); // This shows stack trace, validation errors, etc.
+
+    res.status(400).json({ message: err.message || err.toString() });
+}
 }
 
 
