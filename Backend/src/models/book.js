@@ -30,10 +30,10 @@ const bookSchema = new Schema({
     type: String,
     maxLength: 500
   },
-  images: [{
+  images: {
     type: String, // URLs of book images
     required: true
-  }],
+  },
   
   // Seller (User with role: 'seller')
   seller: {

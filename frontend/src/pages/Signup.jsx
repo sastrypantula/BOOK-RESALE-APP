@@ -1,4 +1,4 @@
-// src/pages/Signup.jsx
+
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../authslice";
@@ -9,12 +9,13 @@ function Signup() {
   const navigate = useNavigate();
   const { loading, isAuthenticated, error } = useSelector((state) => state.auth);
 
- const [form, setForm] = useState({
-  name: "",
-  email: "",
-  password: "",
-  role: "buyer", // or "seller" as default
-});
+     const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "buyer",
+  });
+ 
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

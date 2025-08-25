@@ -8,12 +8,11 @@ authRouter.post('/register', register);
 authRouter.post('/login', login);
 authRouter.post('/logout', authMiddleware(['buyer', 'seller']), logout);
 authRouter.get('/profile', authMiddleware(['buyer', 'seller']), getProfile); // TODO: Add getprofile function
-
 authRouter.get('/check', (req, res) => {
     if (req.user) {
         const reply = {
-            Name: req.user.name,
-            emailId: req.user.emailId,
+            name: req.user.name,      // <-- use 'name'
+            email: req.user.email,    // <-- use 'email'
             _id: req.user._id,
             role: req.user.role,
         };
