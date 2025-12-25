@@ -1,7 +1,7 @@
 const express = require('express');
 const buyerRouter =  express.Router();
 const authMiddleware = require('../../middleware/authMiddleware');
-const { getAllBooks } = require('../controllers/getAllBooks');
+const  getAllBooks  = require('../controllers/getAllBooks');
 const { getBookById } = require('../controllers/getbookbyid');
 const { getMyBooks } = require('../controllers/getMyBooks');
 

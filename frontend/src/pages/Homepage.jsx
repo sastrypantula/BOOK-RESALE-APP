@@ -17,6 +17,7 @@ function Homepage() {
     async function fetchBooks() {
       try {
         const res = await axiosClient.get(`/${user?.role}/books`);
+        // consolse.log(res.data.books);
         setBooks(res.data.books || []);
       } catch (err) {
         setBooks([]);
@@ -86,6 +87,18 @@ onClick={() => {
 }}>
   Logout
 </button>
+{user?.role === "seller" && (
+  <button
+    className="w-full mb-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow transition"
+    onClick={() => {
+      setShowProfile(false);
+      navigate("/admin");
+    }}
+  >
+    Admin
+  </button>
+)}
+
               </div>
             )}
           </div>
@@ -109,11 +122,11 @@ onClick={() => {
                 >
                   {/* Book Image */}
                   <div className="w-full aspect-[4/3] bg-gray-200 rounded mb-3 overflow-hidden flex items-center justify-center">
-                    {book.images ? (
+                    {book.image ? (
                       <img
-                        src={book.images}
+                        src={book.image}
                         alt={book.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-fill"
                       />
                     ) : (
                       <span className="text-gray-400">No Image</span>
@@ -121,7 +134,7 @@ onClick={() => {
                   </div>
                   <div className="font-semibold text-lg mb-1">{book.title}</div>
                   <div className="text-gray-700 mb-1">
-                    Price: <span className="font-bold">₹{book.sellingPrice}</span>
+                    Price: <span className="font-bold">₹{book.price}</span>
                   </div>
                   {/* Add more book details as needed */}
                 </div>

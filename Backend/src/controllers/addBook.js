@@ -1,40 +1,67 @@
-const Book = require('../models/book'); // Missing Book import
-const User = require('../models/user'); // import user model too
+const Book = require("../models/book");
+const cloudinary = require("../../config/cloudinary");
 
+/**
+ * Add new book (Seller)
+ * Route: POST /seller/books/add
+ */
 const addBook = async (req, res) => {
   try {
-    const { title, author, subject, originalPrice, sellingPrice, description, images } = req.body;
-
-    if (!title || !author || !subject || !originalPrice || !sellingPrice || !images || images.length === 0) {
-      return res.status(400).json({ message: 'Please fill all required fields' });
-    }
-
-    const newBook = new Book({
+    const {
       title,
       author,
-      subject,
-      originalPrice,
-      sellingPrice,
       description,
-      images,
-      seller: req.user._id
-    });
+      category,
+      condition,
+      price
+    } = req.body;
 
-    const savedBook = await newBook.save();
+    // basic validation
+    if (!title || !author || !category || !condition || !price) {
+      return res.status(400).json({
+        success: false,
+        message: "All required fields must be filled"
+      });
+    }
 
-    // 👇 Update the seller's list of books
-    await User.findByIdAndUpdate(req.user._id, {
-      $push: { booksListed: savedBook._id }
+    let imageUrl = "";
+
+    // upload image to cloudinary (if exists)
+    if (req.file) {
+      const uploadResult = await cloudinary.uploader.upload(
+        `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
+        {
+          folder: "book-resale-app"
+        }
+      );
+
+      imageUrl = uploadResult.secure_url;
+    }
+
+    const book = await Book.create({
+      title,
+      author,
+      description,
+      category,
+      condition,
+      price,
+      image: imageUrl,
+      sellerId: req.user._id
     });
 
     res.status(201).json({
-      message: 'Book listed successfully',
-      book: savedBook
+      success: true,
+      message: "Book added successfully",
+      book
     });
 
   } catch (error) {
-    res.status(500).json({ message: 'Server Error', error: error.message });
+    console.error("Add book error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error while adding book"
+    });
   }
 };
 
-module.exports = { addBook };
+module.exports = addBook;

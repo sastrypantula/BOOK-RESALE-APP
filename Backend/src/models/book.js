@@ -1,76 +1,57 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const mongoose = require("mongoose");
 
-const bookSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  author: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  subject: {
-    type: String,
-    required: true,
-    enum: ['Physics', 'Chemistry', 'Mathematics', 'Biology', 'zoology', 'Other']
-  },
-  
-  originalPrice: {
-    type: Number,
-    required: true
-  },
-  sellingPrice: {
-    type: Number,
-    required: true
-  },
-  description: {
-    type: String,
-    maxLength: 500
-  },
-  images: {
-    type: String, // URLs of book images
-    required: true
-  },
-  
-  // Seller (User with role: 'seller')
-  seller: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-    
-  },
+const bookSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      trim: true
+    },
 
-  isSold: {
-    type: Boolean,
-    default: false
-  },
+    author: {
+      type: String,
+      required: true,
+      trim: true
+    },
 
-  reviews: [{
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+    description: {
+      type: String,
+      trim: true
+    },
+
+    category: {
+      type: String,
       required: true
     },
-    rating: {
-      type: Number,
-      required: true,
-      min: 1,
-      max: 5
-    },
-    comment: {
+
+    condition: {
       type: String,
-      maxLength: 500
+      enum: ["new", "used"],
+      required: true
+    },
+
+    price: {
+      type: Number,
+      required: true
+    },
+
+    image: {
+      type: String // Cloudinary URL
+    },
+
+    sellerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
+    },
+
+    status: {
+      type: String,
+      enum: ["AVAILABLE", "SOLD"],
+      default: "AVAILABLE"
     }
-  }
-]
-}, 
-{
-  timestamps: true
-});
+  },
+  { timestamps: true }
+);
 
-const Book = mongoose.model('Book', bookSchema);
-
-module.exports = Book;
+module.exports = mongoose.model("Book", bookSchema);
