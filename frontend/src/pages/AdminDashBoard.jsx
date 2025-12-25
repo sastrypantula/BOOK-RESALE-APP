@@ -27,13 +27,7 @@ function AdminDashBoard() {
           Update or Delete Book 
         </button>
 
-        {/* Delete Book
-        <button
-          className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold shadow"
-          onClick={() => navigate("/admin/delete")}
-        >
-          Delete Book
-        </button> */}
+     
       </div>
     </div>
   );
