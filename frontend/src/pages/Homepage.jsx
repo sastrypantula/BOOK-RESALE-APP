@@ -119,6 +119,10 @@ onClick={() => {
                 <div
                   key={book._id}
                   className="border rounded-lg p-3 flex flex-col bg-gray-50 shadow hover:shadow-lg transition"
+                onClick={() => {
+                  console.log("Navigating to book:", book._id);
+                  navigate(`/book/${book._id}`);
+                }}
                 >
                   {/* Book Image */}
                   <div className="w-full aspect-[4/3] bg-gray-200 rounded mb-3 overflow-hidden flex items-center justify-center">

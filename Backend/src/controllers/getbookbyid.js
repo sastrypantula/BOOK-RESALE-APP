@@ -6,8 +6,8 @@ const getBookById = async (req, res) => {
     const bookId = req.params.id;
 
     const book = await Book.findById(bookId)
-      .populate('seller', 'name email') // Get seller details
-      .select('-__v'); // remove __v field
+      .populate('sellerId', 'name email')
+      .select('-__v');
 
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
@@ -17,14 +17,14 @@ const getBookById = async (req, res) => {
       id: book._id,
       title: book.title,
       author: book.author,
-      subject: book.subject,
-      originalPrice: book.originalPrice,
-      sellingPrice: book.sellingPrice,
+      category: book.category,
       description: book.description,
-      images: book.images,
-      isSold: book.isSold,
+      condition: book.condition,
+      price: book.price,
+      image: book.image,
+      status: book.status,
       createdAt: book.createdAt,
-      seller: book.seller
+      seller: book.sellerId   // 👈 rename for frontend clarity
     });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });

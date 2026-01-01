@@ -9,7 +9,7 @@ import UpdateBook from "./pages/UpdateBook";
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuth } from "./authslice";
 import { useEffect } from "react";
-
+import BookDetails from "./pages/BookDetails.jsx";
 
 function App(){
   
@@ -39,6 +39,7 @@ function App(){
       <Route path="/admin/sell" element={isAuthenticated && user?.role==="seller"?<SellBook/>:<Navigate to="/" />}></Route>
       <Route path="/admin/mybooks" element={isAuthenticated && user?.role==="seller"?<MyBooks/>:<Navigate to="/" />}></Route>
       <Route path="/admin/update/:id" element={isAuthenticated && user?.role==="seller"?<UpdateBook/>:<Navigate to="/" />}></Route>
+      <Route path="/book/:id" element={isAuthenticated ?<BookDetails/>:<Navigate to="/"/>}></Route>
     </Routes>
   </>
   )
